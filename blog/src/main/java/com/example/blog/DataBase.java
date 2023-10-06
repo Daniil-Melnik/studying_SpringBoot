@@ -63,7 +63,7 @@ public class DataBase {
         }finally {
             //close connection ,stmt and resultset here
             CloseDBConnection();
-            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ } 
             //try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
         }
         return ar_auto;
