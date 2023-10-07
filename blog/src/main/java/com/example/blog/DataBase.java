@@ -2,6 +2,7 @@ package com.example.blog;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -67,5 +68,23 @@ public class DataBase {
             //try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
         }
         return ar_auto;
+    }
+
+    public static void addAuto(Auto auto) {
+        GetDBConnection();
+        try {
+            String query = "INSERT INTO auto (name, comand, discription, url)" + "VALUES (?, ?, ?, ?)";
+            PreparedStatement prSt = con.prepareStatement(query);
+            prSt.setString(1, auto.getName());
+            prSt.setString(2, auto.getComand());
+            prSt.setString(3, auto.getDiscription());
+            prSt.setString(4, auto.getUrl());
+            prSt.executeUpdate(); 
+        }
+        catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        }finally {
+            CloseDBConnection();
+        }
     }
 }
