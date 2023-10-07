@@ -15,7 +15,10 @@
         <p th:text="${auto.discription}"></p>
         <p th:text="${auto.comand}"></p>
         <a th:href="'/blog/' + ${auto.id} + '/edit'" class="btn btn-warning">Редактировать</a>
-        <a th:href="'/blog/' + ${auto.id} + '/remove'" class="btn btn-warning">Удалить</a>
+        <form th:action="'/blog/' + ${auto.id} + '/remove'" method="post">
+            <button type="submit" class="btn btn-warning">Удалить</button>
+        </form>
+        
     </div>
 
     <div th:insert="blocks/footer :: footer"></div>

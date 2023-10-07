@@ -50,4 +50,37 @@ public class BlogController {
 			return "redirect:/";
 		}
 	}
+
+	@GetMapping("/blog/{id}/edit")
+	public String blogDetailsEdit(@PathVariable(value = "id") long auto_id, Model model) {
+		Auto auto = DataBase.getAuto(auto_id);
+		if (auto != null){
+			model.addAttribute("auto", auto);
+			return "blog-details-edit";
+		}
+		else {
+			return "redirect:/";
+		}
+	}
+
+	@PostMapping("/blog/{id}/edit")
+	public String blogPostUpdate(@PathVariable(value = "id") int auto_id, @RequestParam String name, @RequestParam String comand, @RequestParam String discr, @RequestParam String url, Model model){
+		Auto auto = new Auto();
+		auto.setAuto(auto_id, name, comand, discr, url);
+		DataBase.updAuto(auto);
+		auto = null;
+		Iterable<Auto> auto_list = DataBase.getAutos();
+		model.addAttribute("autos", auto_list);
+		return "redirect:/blog";
+	}
+
+	@PostMapping("/blog/{id}/remove")
+	public String blogPostRemove(@PathVariable(value = "id") int auto_id, Model model){
+		Auto auto = DataBase.getAuto(auto_id);
+		DataBase.delAuto(auto);
+		auto = null;
+		Iterable<Auto> auto_list = DataBase.getAutos();
+		model.addAttribute("autos", auto_list);
+		return "redirect:/blog";
+	}
 }

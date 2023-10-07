@@ -51,7 +51,6 @@ public class DataBase {
             while (rs.next()) {
                 Auto auto = new Auto();
                 auto.setAuto(Integer.parseInt(rs.getString("id")), rs.getString("name"), rs.getString("comand"), rs.getString("discription"), rs.getString("url"));
-                System.out.println(auto.getId());
                 ar_auto.add(auto);
             }
         }
@@ -102,5 +101,37 @@ public class DataBase {
             CloseDBConnection();
         }
         return auto;
+    }
+
+    public static void updAuto(Auto auto) {
+        GetDBConnection();
+        try {
+            PreparedStatement st = con.prepareStatement("UPDATE auto SET name = ?, comand = ?, discription = ?, url = ? WHERE id = ?");
+            st.setString(1, auto.getName());
+            st.setString(2, auto.getComand());
+            st.setString(3, auto.getDiscription());
+            st.setString(4, auto.getUrl());
+            st.setInt(5, auto.getId());
+            st.executeUpdate();
+        }
+        catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        }finally {
+            CloseDBConnection();
+        }
+    }
+
+    public static void delAuto(Auto auto) {
+        GetDBConnection();
+        try {
+            PreparedStatement st = con.prepareStatement("DELETE FROM auto WHERE id = ?");
+            st.setInt(1, auto.getId());
+            st.executeUpdate(); 
+        }
+        catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        }finally {
+            CloseDBConnection();
+        }
     }
 }
