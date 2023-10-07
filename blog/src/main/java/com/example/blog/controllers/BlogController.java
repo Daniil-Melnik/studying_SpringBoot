@@ -42,7 +42,12 @@ public class BlogController {
 	@GetMapping("/blog/{id}")
 	public String blogDetails(@PathVariable(value = "id") long auto_id, Model model) {
 		Auto auto = DataBase.getAuto(auto_id);
-		model.addAttribute("auto", auto);
-		return "blog-details";
+		if (auto != null){
+			model.addAttribute("auto", auto);
+			return "blog-details";
+		}
+		else {
+			return "redirect:/";
+		}
 	}
 }

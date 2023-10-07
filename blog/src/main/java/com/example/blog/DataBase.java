@@ -96,7 +96,8 @@ public class DataBase {
             auto.setAuto(Integer.parseInt(rs.getString("id")), rs.getString("name"), rs.getString("comand"), rs.getString("discription"), rs.getString("url"));
         }
         catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
+            //sqlEx.printStackTrace();
+            return null;
         }finally {
             CloseDBConnection();
         }
