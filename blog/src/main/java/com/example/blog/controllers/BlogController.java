@@ -28,9 +28,9 @@ public class BlogController {
 	}
 
 	@PostMapping("/blog/add")
-	public String blogPostAdd(@RequestParam String name, @RequestParam String comand, @RequestParam String discr, Model model){
+	public String blogPostAdd(@RequestParam String name, @RequestParam String comand, @RequestParam String discr, @RequestParam String url, Model model){
 		Auto auto = new Auto();
-		auto.setAuto(0, name, comand, discr, "https://i.ytimg.com/vi/BnvuQe6KcU8/maxresdefault.jpg");
+		auto.setAuto(0, name, comand, discr, url);
 		DataBase.addAuto(auto);
 		auto = null;
 		Iterable<Auto> auto_list = DataBase.getAutos();
