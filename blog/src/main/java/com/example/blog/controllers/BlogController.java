@@ -4,6 +4,7 @@ package com.example.blog.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,5 +37,17 @@ public class BlogController {
 		Iterable<Auto> auto_list = DataBase.getAutos();
 		model.addAttribute("autos", auto_list);
 		return "redirect:/blog";
+	}
+
+	@GetMapping("/blog/{id}")
+	public String blogDetails(@PathVariable(value = "id") long auto_id, Model model) {
+		Auto auto = DataBase.getAuto(auto_id);
+		if (auto != null){
+			model.addAttribute("auto", auto);
+			return "blog-details";
+		}
+		else {
+			return "redirect:/";
+		}
 	}
 }

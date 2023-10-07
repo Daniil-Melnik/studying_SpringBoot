@@ -25,12 +25,8 @@ public class DataBase {
     private static Statement stmt;
 
     public static void main(String args[]) {
-        ArrayList <Auto> auto_list = (ArrayList<Auto>) getAutos();
-        for (int i = 0; i < auto_list.size(); i++)
-        {
-            Auto auto = auto_list.get(i);
-            System.out.println(auto.getUrl());
-        }
+        Auto auto = getAuto(60);
+        System.out.println(auto.getId() + " " + auto.getName() + " " + auto.getComand());
     }
 
     private static void GetDBConnection() {
@@ -86,5 +82,25 @@ public class DataBase {
         }finally {
             CloseDBConnection();
         }
+    }
+
+    public static Auto getAuto(long id) {
+        GetDBConnection();
+        Auto auto = new Auto();
+        try {
+            String query = "SELECT * FROM auto WHERE id = ?";
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            auto.setAuto(Integer.parseInt(rs.getString("id")), rs.getString("name"), rs.getString("comand"), rs.getString("discription"), rs.getString("url"));
+        }
+        catch (SQLException sqlEx) {
+            //sqlEx.printStackTrace();
+            return null;
+        }finally {
+            CloseDBConnection();
+        }
+        return auto;
     }
 }
