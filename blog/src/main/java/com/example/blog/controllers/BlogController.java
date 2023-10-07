@@ -28,14 +28,13 @@ public class BlogController {
 	}
 
 	@PostMapping("/blog/add")
-	public String blogPostAdd(@RequestParam String name, @RequestParam String comand, Model model){
-		System.out.println( "QQQQQQQ" + name + " " + " " + comand);
+	public String blogPostAdd(@RequestParam String name, @RequestParam String comand, @RequestParam String discr, Model model){
 		Auto auto = new Auto();
-		auto.setAuto(0, name, comand, "full_text", "https://i.ytimg.com/vi/BnvuQe6KcU8/maxresdefault.jpg");
+		auto.setAuto(0, name, comand, discr, "https://i.ytimg.com/vi/BnvuQe6KcU8/maxresdefault.jpg");
 		DataBase.addAuto(auto);
 		auto = null;
 		Iterable<Auto> auto_list = DataBase.getAutos();
 		model.addAttribute("autos", auto_list);
-		return "blog-main";
+		return "redirect:/blog";
 	}
 }
