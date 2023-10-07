@@ -73,4 +73,14 @@ public class BlogController {
 		model.addAttribute("autos", auto_list);
 		return "redirect:/blog";
 	}
+
+	@PostMapping("/blog/{id}/remove")
+	public String blogPostRemove(@PathVariable(value = "id") int auto_id, Model model){
+		Auto auto = DataBase.getAuto(auto_id);
+		DataBase.delAuto(auto);
+		auto = null;
+		Iterable<Auto> auto_list = DataBase.getAutos();
+		model.addAttribute("autos", auto_list);
+		return "redirect:/blog";
+	}
 }

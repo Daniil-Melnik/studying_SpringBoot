@@ -106,16 +106,27 @@ public class DataBase {
     public static void updAuto(Auto auto) {
         GetDBConnection();
         try {
-            System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
-            System.out.println(auto.getId() + " " + auto.getName());
             PreparedStatement st = con.prepareStatement("UPDATE auto SET name = ?, comand = ?, discription = ?, url = ? WHERE id = ?");
-            System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
             st.setString(1, auto.getName());
             st.setString(2, auto.getComand());
             st.setString(3, auto.getDiscription());
             st.setString(4, auto.getUrl());
             st.setInt(5, auto.getId());
             st.executeUpdate();
+        }
+        catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        }finally {
+            CloseDBConnection();
+        }
+    }
+
+    public static void delAuto(Auto auto) {
+        GetDBConnection();
+        try {
+            PreparedStatement st = con.prepareStatement("DELETE FROM auto WHERE id = ?");
+            st.setInt(1, auto.getId());
+            st.executeUpdate(); 
         }
         catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
