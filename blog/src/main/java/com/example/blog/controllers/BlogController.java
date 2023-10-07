@@ -41,6 +41,8 @@ public class BlogController {
 
 	@GetMapping("/blog/{id}")
 	public String blogDetails(@PathVariable(value = "id") long auto_id, Model model) {
-		return "";
+		Auto auto = DataBase.getAuto(auto_id);
+		model.addAttribute("auto", auto);
+		return "blog-details";
 	}
 }
